@@ -1,0 +1,30 @@
+{
+  "name": "webmock",
+  "version": "0.1.0",
+  "description": "Mock AJAX/HTTP/SSR - Automatically generate documentation",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "npm run test:ci"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/onface/webmock.git"
+  },
+  "keywords": [
+    "mock",
+    "server",
+    "mock",
+    "ajax",
+    "ajax",
+    "mock",
+    "fms",
+    "mock",
+    "http"
+  ],
+  "author": "NimoChu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/onface/webmock/issues"
+  },
+  "homepage": "https://github.com/onface/webmock#readme"
+}
