@@ -30,7 +30,7 @@ var mock = webmock({
         },
         'xtpl': {
             compile: function (filePath, data, cb) {
-                var xtpl = require('xtpl');
+                var xtpl = require('xtpl')
                 xtpl.renderFile(filePath, data, function(error,content){
                     cb(error, content)
                 })
@@ -38,7 +38,7 @@ var mock = webmock({
         }
     }
 })
-app.use(mock)
+app.use(mock.express)
 app.use('/inbox', function (req, res, next) {
     if (req.query._ === 'mock') {
         res.send({
@@ -57,10 +57,11 @@ mock.url('/login', {
         "user": {
             type: 'string',
             description: '邮箱或手机',
+            exmaple: 'mail@qq.com'
         },
         "password": {
             type: 'string',
-            description: '密码',
+            description: '密码'
         }
     },
     data: {
@@ -80,28 +81,6 @@ mock.url('/login', {
         }
     }
 })
-/*
-browser code
-$.ajax({
-    data: {
-        _:'fail',
-        user: self.form.user
-    }
-})
-// server code
-var outout
-Object.keys(data).some(function (key) {
-    var item = data[key]
-    if (key.replace(/^$/) === req.query._) {
-        outout = item
-        return  true
-    }
-    if (item.$matchRes && matchReq(req.query, item.$matchRes)) {
-        outout = item
-        return true
-    }
-})
-*/
 mock.url('/order', {
     title: '订单列表',
     req: {
