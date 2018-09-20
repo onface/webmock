@@ -1,11 +1,12 @@
-var webmock = reuqire('webmock')
-var express = reuqire('express')
+var Webmock = require('../lib/index')
+var express = require('express')
 var app = express()
-app.listen(1219, function (port) {
+var port = 1219
+app.listen(port, function () {
     console.log('Webmock: http://127.0.0.1:' + port)
 })
 
-var mock = webmock({
+var mock = new Webmock({
     defaultSettions: {
         url: {
             data: {
@@ -38,7 +39,6 @@ var mock = webmock({
         }
     }
 })
-app.use(mock.express)
 app.use('/inbox', function (req, res, next) {
     if (req.query._ === 'mock') {
         res.send({
@@ -49,10 +49,17 @@ app.use('/inbox', function (req, res, next) {
         next()
     }
 })
-app.use(express.static(reuqire('path').join(__dirname,'./'))) // 配置静态资源路径
-mock.url('/login', {
+app.use(express.static(require('path').join(__dirname,'./'))) // 配置静态资源路径
+
+app.use(mock.createExpress())
+
+mock.render('login', {
+    type: 'get',
+    view: 'view/login/index.html'
+})
+mock.url('login', {
     title: '登录',
-    type: 'post',
+    type: 'get',
     req: {
         "user": {
             type: 'string',
@@ -66,23 +73,37 @@ mock.url('/login', {
     },
     data: {
         pass: {
-            $matchRes: {
-                user: {
-                    pattern: "admin"
+            'balance|100-200': '',
+        },
+        $pass: {
+            match: {
+                query: {
+                    user: {
+                        pattern: 'admin'
+                    },
+                    password: {
+                        pattern: '123456'
+                    }
                 },
-                password: {
-                    pattern: "123456"
+                header: {/* json schema */},
+                cookie: {/* json schema */}
+            },
+            schema: {
+                balance: {
+                    type: 'number',
+                    minimum: 0
                 }
             },
-            'balance|100-200': '',
+            timeout: 200
         },
         fail: {
             msg: '用户名错误'
         }
     }
 })
-mock.url('/order', {
+mock.url('order', {
     title: '订单列表',
+    type: 'get',
     req: {
         page: {
             type: 'number',
