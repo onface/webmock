@@ -1,62 +1,24 @@
 var Webmock = require('../lib/index')
 var express = require('express')
+var cookieParser = require('cookie-parser')
+var bodyParser = require('body-parser')
+var cors = require('cors')
 var app = express()
+
+var mock = new Webmock()
+
+app.use(cors())
+    .use(cookieParser())
+    .use(bodyParser.urlencoded({extended: false, limit: '10240000kb'}))
+    .use(bodyParser.json())
+app.use(express.static(require('path').join(__dirname,'./'))) // 配置静态资源路径
+app.use(mock.server('express'))
+
 var port = 1219
 app.listen(port, function () {
     console.log('Webmock: http://127.0.0.1:' + port)
 })
 
-var mock = new Webmock({
-    defaultSettions: {
-        url: {
-            data: {
-                $pass: {
-                    type: 'pass'
-                },
-                $fail: {
-                    type: 'fail',
-                    msg: 'Fail message'
-                }
-            }
-        },
-        render: {
-            data: {},
-            engine: 'ejs'
-        }
-    },
-    renderTemplateRoot: require('path').join(__dirname),
-    renderEngine: {
-        'php': {
-            server: 'http://127.0.0.1:3000'
-        },
-        'xtpl': {
-            compile: function (filePath, data, cb) {
-                var xtpl = require('xtpl')
-                xtpl.renderFile(filePath, data, function(error,content){
-                    cb(error, content)
-                })
-            }
-        }
-    }
-})
-app.use('/inbox', function (req, res, next) {
-    if (req.query._ === 'mock') {
-        res.send({
-            data: db.get('inbox').value()
-        })
-    }
-    else {
-        next()
-    }
-})
-app.use(express.static(require('path').join(__dirname,'./'))) // 配置静态资源路径
-
-app.use(mock.createExpress())
-
-mock.render('login', {
-    type: 'get',
-    view: 'view/login/index.html'
-})
 mock.url('login', {
     title: '登录',
     type: 'get',
