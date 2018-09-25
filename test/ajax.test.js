@@ -6,7 +6,7 @@ const app = createApp(function (mock) {
         type: 'post',
         data: {
             pass: {
-                'balance|100-200': '',
+                'balance|100-200': 1,
             }
         }
     })
@@ -19,8 +19,10 @@ describe('ajax.js', function() {
         .send('a=1')
         .expect(200)
         .then(res => {
-            console.log(res.body)
-            // res.body.should.equal('abc')
+            Object.keys(res.body).should.eql(['type', 'balance'])
+            res.body.type.should.equal('pass')
+            res.body.balance.should.above(99)
+            res.body.balance.should.below(201)
             done()
         })
     })
