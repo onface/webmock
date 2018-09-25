@@ -72,6 +72,21 @@ const app = createApp(function (mock) {
             }
         }
     })
+    mock.url('/timeout500', {
+        type: 'get',
+        timeout: 500
+    })
+    mock.url('/timeout', {
+        type: 'get',
+        data: {
+            $pass: {
+                timeout: 200
+            },
+            $fail: {
+                timeout: 300
+            }
+        }
+    })
     // mock.url('/order', {
     //     type: 'post',
     //     header: {
@@ -188,14 +203,30 @@ describe('ajax.js', function() {
             done()
         })
     })
-    it('should return status 404', function (done) {
+    it('should return timeout 500', function (done) {
+        var startTime = new Date().getTime()
         request(app)
-        .get('/status?_=fail')
-        // .expect(404)
+        .get('/timeout500')
         .then(res => {
-            console.log(res)
-            // Object.keys(res.body).should.eql(['type'])
-            // res.body.type.should.equal('fail')
+            (new Date().getTime() - startTime).should.above(499).below(530)
+            done()
+        })
+    })
+    it('should return timeout 200', function (done) {
+        var startTime = new Date().getTime()
+        request(app)
+        .get('/timeout')
+        .then(res => {
+            (new Date().getTime() - startTime).should.above(199).below(230)
+            done()
+        })
+    })
+    it('should return timeout 300', function (done) {
+        var startTime = new Date().getTime()
+        request(app)
+        .get('/timeout?_=fail')
+        .then(res => {
+            (new Date().getTime() - startTime).should.above(299).below(330)
             done()
         })
     })
