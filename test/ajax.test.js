@@ -87,6 +87,35 @@ const app = createApp(function (mock) {
             }
         }
     })
+    mock.url('/header_name_nimo', {
+        type: 'get',
+        header: {
+            name: 'nimo'
+        }
+    })
+    mock.url('/header', {
+        type: 'get',
+        data: {
+            $pass: {
+                header: {
+                    a: 'pass'
+                }
+            },
+            $fail: {
+                header: {
+                    a: 'fail'
+                }
+            },
+            mock: {
+
+            },
+            $mock: {
+                header: {
+                    'name': "@email"
+                }
+            }
+        }
+    })
     // mock.url('/order', {
     //     type: 'post',
     //     header: {
@@ -227,6 +256,39 @@ describe('ajax.js', function() {
         .get('/timeout?_=fail')
         .then(res => {
             (new Date().getTime() - startTime).should.above(299).below(330)
+            done()
+        })
+    })
+    it('should return header_name_nimo', function (done) {
+        request(app)
+        .get('/header_name_nimo')
+        .expect('name', 'nimo')
+        .then(res => {
+            done()
+        })
+    })
+    it('should return header pass', function (done) {
+        request(app)
+        .get('/header')
+        .expect('a', 'pass')
+        .then(res => {
+            done()
+        })
+    })
+    it('should return header fail', function (done) {
+        request(app)
+        .get('/header?_=fail')
+        .expect('a', 'fail')
+        .then(res => {
+            done()
+        })
+    })
+    it('should return header mock', function (done) {
+        request(app)
+        .get('/header?_=mock')
+        .then(res => {
+            res.headers['name'].should.match(/@/)
+            res.headers['name'].should.match(/./)
             done()
         })
     })
