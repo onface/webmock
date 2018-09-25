@@ -17,7 +17,7 @@ const app = createApp(function (mock) {
         type: 'get',
         data: {
             pass: {
-                lists: [
+                list: [
                     '瑞典电视台回应称“表达整体意思出现缺失”并未道歉',
                     '这个商品进了贸易战清单 俄罗斯愿助中国一臂之力',
                     '中国对外贸易实现历史性跨越 40年进口增长664倍'
@@ -30,6 +30,29 @@ const app = createApp(function (mock) {
                 match: {
                     search: {
                         pattern: 'abc'
+                    }
+                }
+            },
+            hot: {
+                list: [
+                    'HOT 台风中中国机长倒飞直升机救人，大片都不敢这么拍！',
+                    'HOT 注意！近期你家电视信号将出现干扰，原因是…',
+                    'HOT 幼儿园装修孩子流鼻血 园方家长2次检测结果却相反'
+                ]
+            },
+            $hot: {
+                match: {
+                    schema: {
+                        required: ['filter'],
+                        dependencies: {
+                            'type': ['filter']
+                        }
+                    },
+                    filter: {
+                        enum: ['true']
+                    },
+                    type: {
+                        enum: ['hot']
                     }
                 }
             }
@@ -72,7 +95,18 @@ describe('ajax.js', function() {
             done()
         })
     })
-    it('should return empty GET(search_=abc)', function(done) {
+    it('should return pass list', function(done) {
+        request(app)
+        .get('/news')
+        .expect(200)
+        .then(res => {
+            Object.keys(res.body).should.eql(['type', 'list'])
+            res.body.type.should.equal('pass')
+            res.body.list.length.should.equal(3)
+            done()
+        })
+    })
+    it('should return empty GET(search=abc)', function(done) {
         request(app)
         .get('/news?search=abc')
         .expect(200)
@@ -80,6 +114,18 @@ describe('ajax.js', function() {
             Object.keys(res.body).should.eql(['type', 'list'])
             res.body.type.should.equal('empty')
             res.body.list.length.should.equal(0)
+            done()
+        })
+    })
+    it('should return hot GET(filter=true&type=hot)', function(done) {
+        request(app)
+        .get('/news?filter=true&type=hot')
+        .expect(200)
+        .then(res => {
+            Object.keys(res.body).should.eql(['type', 'list'])
+            res.body.type.should.equal('hot')
+            res.body.list.length.should.equal(3)
+            res.body.list[0].should.eql('HOT 台风中中国机长倒飞直升机救人，大片都不敢这么拍！')
             done()
         })
     })
