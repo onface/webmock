@@ -116,6 +116,36 @@ const app = createApp(function (mock) {
             }
         }
     })
+
+    mock.url('/cookie_name_nimo', {
+        type: 'get',
+        cookie: {
+            cname: 'nimo'
+        }
+    })
+    mock.url('/cookie', {
+        type: 'get',
+        data: {
+            $pass: {
+                cookie: {
+                    ca: 'pass'
+                }
+            },
+            $fail: {
+                cookie: {
+                    ca: 'fail'
+                }
+            },
+            mock: {
+
+            },
+            $mock: {
+                cookie: {
+                    'name': "@email"
+                }
+            }
+        }
+    })
     // mock.url('/order', {
     //     type: 'post',
     //     header: {
@@ -232,33 +262,6 @@ describe('ajax.js', function() {
             done()
         })
     })
-    it('should return timeout 500', function (done) {
-        var startTime = new Date().getTime()
-        request(app)
-        .get('/timeout500')
-        .then(res => {
-            (new Date().getTime() - startTime).should.above(499).below(530)
-            done()
-        })
-    })
-    it('should return timeout 200', function (done) {
-        var startTime = new Date().getTime()
-        request(app)
-        .get('/timeout')
-        .then(res => {
-            (new Date().getTime() - startTime).should.above(199).below(230)
-            done()
-        })
-    })
-    it('should return timeout 300', function (done) {
-        var startTime = new Date().getTime()
-        request(app)
-        .get('/timeout?_=fail')
-        .then(res => {
-            (new Date().getTime() - startTime).should.above(299).below(330)
-            done()
-        })
-    })
     it('should return header_name_nimo', function (done) {
         request(app)
         .get('/header_name_nimo')
@@ -288,7 +291,68 @@ describe('ajax.js', function() {
         .get('/header?_=mock')
         .then(res => {
             res.headers['name'].should.match(/@/)
-            res.headers['name'].should.match(/./)
+            res.headers['name'].should.match(/\./)
+            done()
+        })
+    })
+
+    it('should return cookie_name_nimo', function (done) {
+        request(app)
+        .get('/cookie_name_nimo')
+        .then(res => {
+            JSON.stringify(res.headers['set-cookie']).should.match(/cname\=nimo/)
+            done()
+        })
+    })
+    it('should return cookie pass', function (done) {
+        request(app)
+        .get('/cookie')
+        .then(res => {
+            JSON.stringify(res.headers['set-cookie']).should.match(/ca\=pass/)
+            done()
+        })
+    })
+    it('should return cookie fail', function (done) {
+        request(app)
+        .get('/cookie?_=fail')
+        .then(res => {
+            JSON.stringify(res.headers['set-cookie']).should.match(/ca\=fail/)
+            done()
+        })
+    })
+    it('should return cookie mock', function (done) {
+        request(app)
+        .get('/cookie?_=mock')
+        .then(res => {
+            JSON.stringify(res.headers['set-cookie']).should.match(/\%40/)
+            JSON.stringify(res.headers['set-cookie']).should.match(/\./)
+            done()
+        })
+    })
+    it('should return timeout 500', function (done) {
+        var startTime = new Date().getTime()
+        request(app)
+        .get('/timeout500')
+        .then(res => {
+            (new Date().getTime() - startTime).should.above(499).below(530)
+            done()
+        })
+    })
+    it('should return timeout 200', function (done) {
+        var startTime = new Date().getTime()
+        request(app)
+        .get('/timeout')
+        .then(res => {
+            (new Date().getTime() - startTime).should.above(199).below(230)
+            done()
+        })
+    })
+    it('should return timeout 300', function (done) {
+        var startTime = new Date().getTime()
+        request(app)
+        .get('/timeout?_=fail')
+        .then(res => {
+            (new Date().getTime() - startTime).should.above(299).below(330)
             done()
         })
     })
