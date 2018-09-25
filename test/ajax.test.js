@@ -38,7 +38,7 @@ const app = createApp(function (mock) {
 })
 
 describe('ajax.js', function() {
-    it('should return pass data', function(done) {
+    it('should return pass', function(done) {
         request(app)
         .post('/login')
         .expect(200)
@@ -50,7 +50,7 @@ describe('ajax.js', function() {
             done()
         })
     })
-    it('should return pass fail POST(_=fail)', function(done) {
+    it('should return fail POST(_=fail)', function(done) {
         request(app)
         .post('/login')
         .send('_=fail')
@@ -61,7 +61,7 @@ describe('ajax.js', function() {
             done()
         })
     })
-    it('should return pass fail PUT(_=fail)', function(done) {
+    it('should return fail PUT(_=fail)', function(done) {
         request(app)
         .put('/login')
         .send('_=fail')
