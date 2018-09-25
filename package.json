@@ -6,7 +6,7 @@
   "scripts": {
     "s": "babel-watch ./example/start.js",
     "test": "./node_modules/mocha/bin/mocha  -w test/**.test.js",
-    "test:debug": "DEBUG=webmock:* ./node_modules/mocha/bin/mocha --inspect  -w test/**.test.js"
+    "test:debug": "DEBUG=webmock:*  ./node_modules/mocha/bin/mocha --inspect  -w test/**.test.js"
   },
   "repository": {
     "type": "git",
@@ -30,6 +30,7 @@
   },
   "homepage": "https://github.com/onface/webmock#readme",
   "dependencies": {
+    "ajv": "^6.5.4",
     "debug": "^4.0.1",
     "mockjs": "^1.0.1-beta3",
     "safe-extend": "^3.0.5"
