@@ -57,6 +57,21 @@ const app = createApp(function (mock) {
             }
         }
     })
+    mock.url('/status404', {
+        type: 'get',
+        status: 404
+    })
+    mock.url('/status', {
+        type: 'get',
+        data: {
+            $pass: {
+                status: 300
+            },
+            $fail: {
+                status: 404
+            }
+        }
+    })
     // mock.url('/order', {
     //     type: 'post',
     //     header: {
@@ -150,6 +165,37 @@ describe('ajax.js', function() {
             Object.keys(res.body).should.eql(['type', 'list'])
             res.body.type.should.equal('pass')
             res.body.list.length.should.equal(3)
+            done()
+        })
+    })
+    it('should return status 404', function (done) {
+        request(app)
+        .get('/status404')
+        .expect(404)
+        .then(res => {
+            Object.keys(res.body).should.eql(['type'])
+            res.body.type.should.equal('pass')
+            done()
+        })
+    })
+    it('should return status 300', function (done) {
+        request(app)
+        .get('/status')
+        .expect(300)
+        .then(res => {
+            Object.keys(res.body).should.eql(['type'])
+            res.body.type.should.equal('pass')
+            done()
+        })
+    })
+    it('should return status 404', function (done) {
+        request(app)
+        .get('/status?_=fail')
+        // .expect(404)
+        .then(res => {
+            console.log(res)
+            // Object.keys(res.body).should.eql(['type'])
+            // res.body.type.should.equal('fail')
             done()
         })
     })
