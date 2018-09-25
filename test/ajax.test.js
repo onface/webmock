@@ -27,7 +27,7 @@ const app = createApp(function (mock) {
                 list: []
             },
             $empty: {
-                match: {
+                matchReq: {
                     search: {
                         pattern: 'abc'
                     }
@@ -41,9 +41,8 @@ const app = createApp(function (mock) {
                 ]
             },
             $hot: {
-                match: {
+                matchReq: {
                     schema: {
-                        required: ['filter'],
                         dependencies: {
                             'type': ['filter']
                         }
@@ -58,6 +57,20 @@ const app = createApp(function (mock) {
             }
         }
     })
+    // mock.url('/order', {
+    //     type: 'post',
+    //     header: {
+    //         v: enum: [1]
+    //     }
+    // })
+    // mock.url('/order', {
+    //     type: 'post',
+    //     header: {
+    //         v: {
+    //             enum: [2]
+    //         }
+    //     }
+    // })
 })
 
 describe('ajax.js', function() {
@@ -126,6 +139,17 @@ describe('ajax.js', function() {
             res.body.type.should.equal('hot')
             res.body.list.length.should.equal(3)
             res.body.list[0].should.eql('HOT 台风中中国机长倒飞直升机救人，大片都不敢这么拍！')
+            done()
+        })
+    })
+    it('should return hot GET(filter=true)', function(done) {
+        request(app)
+        .get('/news?filter=true')
+        .expect(200)
+        .then(res => {
+            Object.keys(res.body).should.eql(['type', 'list'])
+            res.body.type.should.equal('pass')
+            res.body.list.length.should.equal(3)
             done()
         })
     })
