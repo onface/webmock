@@ -32,3 +32,13 @@ mock.render('/demo', {
         }
     }
 })
+
+mock.render('/php', {
+    view: 'php.php',
+    engine: 'php',
+    data: {
+        pass: {
+            age: 24
+        }
+    }
+})

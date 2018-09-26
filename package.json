@@ -5,6 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "s": "DEBUG=webmock:* babel-watch --inspect ./example/start.js",
+    "php": "php -S 127.0.0.1:7233 -t ./example",
     "test": "./node_modules/mocha/bin/mocha  -w test/**.test.js",
     "test:debug": "DEBUG=webmock:*  ./node_modules/mocha/bin/mocha --inspect  -w test/**.test.js"
   },
@@ -34,6 +35,7 @@
     "debug": "^4.0.1",
     "ejs": "^2.6.1",
     "mockjs": "^1.0.1-beta3",
+    "request": "^2.88.0",
     "safe-extend": "^3.0.5"
   },
   "devDependencies": {
