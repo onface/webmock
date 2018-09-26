@@ -1,168 +1,25 @@
 var request = require('supertest')
 var createApp = require('./createApp')
 var should = require('chai').should()
-const app = createApp(function (mock) {
-    mock.url('/login', {
-        type: 'post',
-        data: {
-            pass: {
-                'balance|100-200': 1,
-            }
-        }
-    })
-    mock.url('/login', {
-        type: 'put'
-    })
-    mock.url('/news', {
-        type: 'get',
-        data: {
-            pass: {
-                list: [
-                    '瑞典电视台回应称“表达整体意思出现缺失”并未道歉',
-                    '这个商品进了贸易战清单 俄罗斯愿助中国一臂之力',
-                    '中国对外贸易实现历史性跨越 40年进口增长664倍'
-                ]
-            },
-            empty:{
-                list: []
-            },
-            $empty: {
-                matchReq: {
-                    search: {
-                        pattern: 'abc'
-                    }
-                }
-            },
-            hot: {
-                list: [
-                    'HOT 台风中中国机长倒飞直升机救人，大片都不敢这么拍！',
-                    'HOT 注意！近期你家电视信号将出现干扰，原因是…',
-                    'HOT 幼儿园装修孩子流鼻血 园方家长2次检测结果却相反'
-                ]
-            },
-            $hot: {
-                matchReq: {
-                    schema: {
-                        dependencies: {
-                            'type': ['filter']
-                        }
-                    },
-                    filter: {
-                        enum: ['true']
-                    },
-                    type: {
-                        enum: ['hot']
-                    }
-                }
-            }
-        }
-    })
-    mock.url('/status404', {
-        type: 'get',
-        status: 404
-    })
-    mock.url('/status', {
-        type: 'get',
-        data: {
-            $pass: {
-                status: 300
-            },
-            $fail: {
-                status: 404
-            }
-        }
-    })
-    mock.url('/timeout500', {
-        type: 'get',
-        timeout: 500
-    })
-    mock.url('/timeout', {
-        type: 'get',
-        data: {
-            $pass: {
-                timeout: 200
-            },
-            $fail: {
-                timeout: 300
-            }
-        }
-    })
-    mock.url('/header_name_nimo', {
-        type: 'get',
-        header: {
-            name: 'nimo'
-        }
-    })
-    mock.url('/header', {
-        type: 'get',
-        data: {
-            $pass: {
-                header: {
-                    a: 'pass'
-                }
-            },
-            $fail: {
-                header: {
-                    a: 'fail'
-                }
-            },
-            mock: {
-
-            },
-            $mock: {
-                header: {
-                    'name': "@email"
-                }
-            }
-        }
-    })
-
-    mock.url('/cookie_name_nimo', {
-        type: 'get',
-        cookie: {
-            cname: 'nimo'
-        }
-    })
-    mock.url('/cookie', {
-        type: 'get',
-        data: {
-            $pass: {
-                cookie: {
-                    ca: 'pass'
-                }
-            },
-            $fail: {
-                cookie: {
-                    ca: 'fail'
-                }
-            },
-            mock: {
-
-            },
-            $mock: {
-                cookie: {
-                    'name': "@email"
-                }
-            }
-        }
-    })
-    // mock.url('/order', {
-    //     type: 'post',
-    //     header: {
-    //         v: enum: [1]
-    //     }
-    // })
-    // mock.url('/order', {
-    //     type: 'post',
-    //     header: {
-    //         v: {
-    //             enum: [2]
-    //         }
-    //     }
-    // })
+var mock
+const app = createApp(function (webmock) {
+    mock = webmock
 })
 
-describe('ajax.js', function() {
+describe('ajax.test.js', function() {
+
+        mock.url('/login', {
+            type: 'post',
+            data: {
+                pass: {
+                    'balance|100-200': 1,
+                }
+            }
+        })
+        mock.url('/login', {
+            type: 'put'
+        })
+
     it('should return pass', function(done) {
         request(app)
         .post('/login')
@@ -197,6 +54,50 @@ describe('ajax.js', function() {
             done()
         })
     })
+        mock.url('/news', {
+            type: 'get',
+            data: {
+                pass: {
+                    list: [
+                        '瑞典电视台回应称“表达整体意思出现缺失”并未道歉',
+                        '这个商品进了贸易战清单 俄罗斯愿助中国一臂之力',
+                        '中国对外贸易实现历史性跨越 40年进口增长664倍'
+                    ]
+                },
+                empty:{
+                    list: []
+                },
+                $empty: {
+                    matchReq: {
+                        search: {
+                            pattern: 'abc'
+                        }
+                    }
+                },
+                hot: {
+                    list: [
+                        'HOT 台风中中国机长倒飞直升机救人，大片都不敢这么拍！',
+                        'HOT 注意！近期你家电视信号将出现干扰，原因是…',
+                        'HOT 幼儿园装修孩子流鼻血 园方家长2次检测结果却相反'
+                    ]
+                },
+                $hot: {
+                    matchReq: {
+                        schema: {
+                            dependencies: {
+                                'type': ['filter']
+                            }
+                        },
+                        filter: {
+                            enum: ['true']
+                        },
+                        type: {
+                            enum: ['hot']
+                        }
+                    }
+                }
+            }
+        })
     it('should return pass list', function(done) {
         request(app)
         .get('/news')
@@ -242,6 +143,21 @@ describe('ajax.js', function() {
             done()
         })
     })
+        mock.url('/status404', {
+            type: 'get',
+            status: 404
+        })
+        mock.url('/status', {
+            type: 'get',
+            data: {
+                $pass: {
+                    status: 300
+                },
+                $fail: {
+                    status: 404
+                }
+            }
+        })
     it('should return status 404', function (done) {
         request(app)
         .get('/status404')
@@ -262,6 +178,35 @@ describe('ajax.js', function() {
             done()
         })
     })
+        mock.url('/header_name_nimo', {
+            type: 'get',
+            header: {
+                name: 'nimo'
+            }
+        })
+        mock.url('/header', {
+            type: 'get',
+            data: {
+                $pass: {
+                    header: {
+                        a: 'pass'
+                    }
+                },
+                $fail: {
+                    header: {
+                        a: 'fail'
+                    }
+                },
+                mock: {
+
+                },
+                $mock: {
+                    header: {
+                        'name': "@email"
+                    }
+                }
+            }
+        })
     it('should return header_name_nimo', function (done) {
         request(app)
         .get('/header_name_nimo')
@@ -296,6 +241,35 @@ describe('ajax.js', function() {
         })
     })
 
+        mock.url('/cookie_name_nimo', {
+            type: 'get',
+            cookie: {
+                cname: 'nimo'
+            }
+        })
+        mock.url('/cookie', {
+            type: 'get',
+            data: {
+                $pass: {
+                    cookie: {
+                        ca: 'pass'
+                    }
+                },
+                $fail: {
+                    cookie: {
+                        ca: 'fail'
+                    }
+                },
+                mock: {
+
+                },
+                $mock: {
+                    cookie: {
+                        'name': "@email"
+                    }
+                }
+            }
+        })
     it('should return cookie_name_nimo', function (done) {
         request(app)
         .get('/cookie_name_nimo')
@@ -329,30 +303,35 @@ describe('ajax.js', function() {
             done()
         })
     })
-    it('should return timeout 500', function (done) {
-        var startTime = new Date().getTime()
+        mock.url('/mockcontrol', {
+            type: 'get',
+            data: {
+                pass: {
+                    email: '@email'
+                },
+                mock: {
+                    email: '@email'
+                },
+                $mock: {
+                    mock: true
+                }
+            },
+            mock: false
+        })
+    it('shout return source data mock=false', function (done) {
         request(app)
-        .get('/timeout500')
+        .get('/mockcontrol')
         .then(res => {
-            (new Date().getTime() - startTime).should.above(499).below(530)
+            res.body.email.should.eql('@email')
             done()
         })
     })
-    it('should return timeout 200', function (done) {
-        var startTime = new Date().getTime()
+    it('shout return mock data mock=true', function (done) {
         request(app)
-        .get('/timeout')
+        .get('/mockcontrol?_=mock')
         .then(res => {
-            (new Date().getTime() - startTime).should.above(199).below(230)
-            done()
-        })
-    })
-    it('should return timeout 300', function (done) {
-        var startTime = new Date().getTime()
-        request(app)
-        .get('/timeout?_=fail')
-        .then(res => {
-            (new Date().getTime() - startTime).should.above(299).below(330)
+            res.body.email.should.match(/@/)
+            res.body.email.should.match(/\./)
             done()
         })
     })
