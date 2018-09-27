@@ -20,7 +20,7 @@ var port = 1219
 app.listen(port, function () {
     console.log('Webmock: http://127.0.0.1:' + port)
 })
-
+mock.writeDoc(__dirname + '/doc.html')
 mock.render('/demo', {
     view: 'index.html',
     data: {

@@ -2191,6 +2191,12 @@ wrappy@1:
   version "1.0.2"
   resolved "https://registry.npmjs.org/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
 
+xtemplate@^4.6.1:
+  version "4.6.1"
+  resolved "https://registry.npmjs.org/xtemplate/-/xtemplate-4.6.1.tgz#11bb4fe31e878bda0af9a139ab4d32fe0cffad3f"
+  dependencies:
+    escape-html "~1.0.3"
+
 yallist@^3.0.0, yallist@^3.0.2:
   version "3.0.2"
   resolved "https://registry.npmjs.org/yallist/-/yallist-3.0.2.tgz#8452b4bb7e83c7c188d8041c1a837c773d6d8bb9"

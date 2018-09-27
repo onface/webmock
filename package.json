@@ -4,7 +4,7 @@
   "description": "Mock AJAX/HTTP/SSR - Automatically generate documentation",
   "main": "lib/index.js",
   "scripts": {
-    "s": "DEBUG=webmock:* babel-watch --inspect ./example/start.js",
+    "s": "DEBUG=webmock:* babel-watch --watch lib ./example/start.js",
     "php": "php -S 127.0.0.1:7233 -t ./example",
     "test": "./node_modules/mocha/bin/mocha  -w test/**.test.js",
     "test:debug": "DEBUG=webmock:*  ./node_modules/mocha/bin/mocha --inspect  -w test/**.test.js"
@@ -36,7 +36,8 @@
     "ejs": "^2.6.1",
     "mockjs": "^1.0.1-beta3",
     "request": "^2.88.0",
-    "safe-extend": "^3.0.5"
+    "safe-extend": "^3.0.5",
+    "xtemplate": "^4.6.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

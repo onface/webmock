@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>API Document (Create by webmock)</title>
+</head>
+<body class="markdown-body">
+<link rel="stylesheet" href="https://unpkg.com/github-markdown-css@2.10.0/github-markdown.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-json-tree-view@2.1.4/dist/vue-json-tree-view.min.js"></script>
+<script src="https://unpkg.com/react@16.5.2/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@16.5.2/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/react-json-view@1.19.1/dist/main.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<style>
+.el-tabs--border-card {
+    box-shadow: none;
+    -webkit-box-shadow:none;
+}
+</style>
+<div id="app">
+    <div v-for="item in data">
+        <h2><a :href="item.url">{{item.title || item.url}}</a></h2>
+        <div style="margin-bottom:1em;">
+            <code>{{item.type}}</code> <code><a :href="item.url">{{item.url}}</a></code>
+        </div>
+        <strong>Request</strong>
+        <pre class="js-json-view">{{item.req}}</pre>
+        <strong>Response</strong>
+        <el-tabs type="border-card" >
+            <el-tab-pane v-for="(value, key) in item.mockedData" v-if="key[0] !== '$'" :label="key" ><pre class="js-json-view">{{value}}</pre></el-tab-pane>
+        </el-tabs>
+    </div>
+</div>
+<script>
+var data = [
+    {
+        "data": {
+            "pass": {
+                "type": "pass",
+                "email": "@email"
+            },
+            "fail": {
+                "type": "fail",
+                "msg": "@email is spam"
+            }
+        },
+        "status": 200,
+        "timeout": 0,
+        "header": {},
+        "cookie": {},
+        "mock": true,
+        "dataAutoFill": [
+            {
+                "key": "type",
+                "replace": "rType"
+            }
+        ],
+        "engine": "ejs",
+        "view": "index.html",
+        "type": "GET",
+        "url": "/demo",
+        "mockedData": {
+            "pass": {
+                "type": "pass",
+                "email": "s.yiwt@jcwbbexq.ly"
+            },
+            "fail": {
+                "type": "fail",
+                "msg": "h.mgthgj@glepoo.ev is spam"
+            }
+        }
+    },
+    {
+        "data": {
+            "pass": {
+                "type": "pass",
+                "age": 24
+            }
+        },
+        "status": 200,
+        "timeout": 0,
+        "header": {},
+        "cookie": {},
+        "mock": true,
+        "dataAutoFill": [
+            {
+                "key": "type",
+                "replace": "rType"
+            }
+        ],
+        "engine": "php",
+        "view": "php.php",
+        "type": "GET",
+        "url": "/php",
+        "mockedData": {
+            "pass": {
+                "type": "pass",
+                "age": 24
+            }
+        }
+    }
+]
+Vue.use(TreeView)
+new Vue({
+    el: '#app',
+    methods: {
+        json: function (data) {
+            return JSON.stringify(data, null ,4)
+        }
+    },
+    data: function () {
+        return {
+            data: data
+        }
+    }
+})
+Array.from(document.querySelectorAll('.js-json-view')).forEach(function (node){
+    if (!node.innerHTML) {
+        return
+    }
+    var data = JSON.parse(node.innerHTML)
+    ReactDOM.render(
+        React.createElement(reactJsonView.default, {src: data, name: false, displayDataTypes: false}),
+        node
+    )
+})
+</script>
+</body>
+</html>
