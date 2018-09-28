@@ -8,14 +8,15 @@
 </head>
 <body class="markdown-body">
 <link rel="stylesheet" href="https://unpkg.com/github-markdown-css@2.10.0/github-markdown.css" />
+<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 <script src="http://unpkg.com/vue"></script>
 <script src="https://unpkg.com/jquery@1.12.0/dist/jquery.min.js"></script>
 <script src="https://unpkg.com/vue-json-tree-view@2.1.4/dist/vue-json-tree-view.min.js"></script>
 <script src="https://unpkg.com/react@16.5.2/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@16.5.2/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/react-json-view@1.19.1/dist/main.js"></script>
-<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="https://unpkg.com/mockjs@1.0.1-beta3/dist/mock-min.js"></script>
 <style>
 .el-tabs--border-card {
     box-shadow: none;
@@ -85,6 +86,23 @@ html .face-one-sidebar > ul > li {
         margin-left: 0;
     }
 }
+.array-key {
+    display: none;
+}
+.array-key~span {
+    display: none !important;
+}
+.node-ellipsis {
+    color: gray !important;
+    font-weight: lighter;
+    font-size: .8em !important;
+}
+.collapsed-icon,
+.expanded-icon,
+.copy-icon{
+    opacity: .1;
+}
+
 </style>
 <div id="app" class="doc">
     <div class="face-one-sidebar">
@@ -103,15 +121,18 @@ html .face-one-sidebar > ul > li {
                 <code>{{item.type}}</code> <code><a :href="item.url">{{item.url}}</a></code>
             </div>
             <strong>Request</strong>
-            <pre class="js-json-view" data-name="schema">{{item.req}}</pre>
+            <pre class="js-json-view" data-name="JSON schema">{{item.req}}</pre>
             <strong>Response</strong>
             <el-tabs type="border-card" >
-                <el-tab-pane v-for="(value, key) in item.mockedData" v-if="key[0] !== '$'" :label="key" >
-                    <pre class="js-json-view">{{value}}</pre>
+                <el-tab-pane v-for="(value, key) in item.data" v-if="key[0] !== '$'" :label="key" >
+                    <pre class="js-json-view" data-collapsed="3" >{{mock(value)}}</pre>
                     <el-collapse>
-                      <el-collapse-item v-if="item.data['$'+key]" title="JSON schema">
+                            <el-collapse-item v-if="item.data['$'+key]" title="Mock template">
+                        <pre class="js-json-view" >{{value}}</pre>
+                        </el-collapse-item>
+                        <el-collapse-item v-if="item.data['$'+key]" title="JSON schema">
                         <pre class="js-json-view" >{{item.data['$' + key]['check']}}</pre>
-                      </el-collapse-item>
+                        </el-collapse-item>
                    </el-collapse>
                 </el-tab-pane>
             </el-tabs>
@@ -126,6 +147,9 @@ new Vue({
     methods: {
         json: function (data) {
             return JSON.stringify(data, null ,4)
+        },
+        mock: function (data) {
+            return Mock.mock(data)
         }
     },
     data: function () {
@@ -139,7 +163,18 @@ Array.from(document.querySelectorAll('.js-json-view')).forEach(function (node){
         return
     }
     var data = JSON.parse(node.innerHTML)
-    var props = {src: data, name: false, displayDataTypes: false}
+    var props = {
+        src: data,
+        // iconStyle: 'square',
+        displayObjectSize: false,
+        name: false,
+        displayDataTypes: false,
+        sortKeys: true,
+        collapsed: 1000
+    }
+    if (node.getAttribute('data-collapsed')) {
+        props.collapsed = parseInt(node.getAttribute('data-collapsed'))
+    }
     if (node.getAttribute('data-name')) {
         props.name = node.getAttribute('data-name')
     }

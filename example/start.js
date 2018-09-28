@@ -32,7 +32,11 @@ mock.url('/demo', {
     },
     data: {
         pass: {
-            email: '@email'
+            email: '@email',
+            'list': [{
+                name: '@name',
+                'demo': [{a:1}]
+            }]
         },
         $pass: {
             check: {
