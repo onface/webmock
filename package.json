@@ -32,6 +32,7 @@
   "homepage": "https://github.com/onface/webmock#readme",
   "dependencies": {
     "ajv": "^6.5.4",
+    "array-sort": "^1.0.0",
     "debug": "^4.0.1",
     "ejs": "^2.6.1",
     "mockjs": "^1.0.1-beta3",

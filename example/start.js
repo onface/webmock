@@ -21,11 +21,25 @@ app.listen(port, function () {
     console.log('Webmock: http://127.0.0.1:' + port)
 })
 mock.writeDoc(__dirname + '/doc.html')
-mock.render('/demo', {
-    view: 'index.html',
+mock.url('/demo', {
+    type: 'get',
+    title: '测试',
+    req: {
+        user: {
+            title: '用户名',
+            example: 'nimo'
+        }
+    },
     data: {
         pass: {
             email: '@email'
+        },
+        $pass: {
+            check: {
+                email: {
+                    title: '邮箱地址'
+                }
+            }
         },
         fail: {
             msg: '@email is spam'
@@ -41,4 +55,8 @@ mock.render('/php', {
             age: 24
         }
     }
+})
+
+mock.url('/aa', {
+    type: 'get'
 })
