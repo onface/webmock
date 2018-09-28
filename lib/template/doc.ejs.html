@@ -129,11 +129,14 @@ html .face-one-sidebar > ul > li {
                 <el-tab-pane v-for="(value, key) in item.data" v-if="key[0] !== '$'" :label="key" >
                     <pre class="js-json-view" data-collapsed="3" >{{mock(value)}}</pre>
                     <el-collapse>
-                            <el-collapse-item v-if="item.data['$'+key]" title="Mock template">
-                        <pre class="js-json-view" >{{value}}</pre>
+                        <el-collapse-item v-if="item.data[key]" title="Mock template">
+                            <pre class="js-json-view" >{{value}}</pre>
                         </el-collapse-item>
                         <el-collapse-item v-if="item.data['$'+key]" title="JSON schema">
-                        <pre class="js-json-view" >{{item.data['$' + key]['check']}}</pre>
+                            <pre class="js-json-view" >{{item.data['$' + key]['check']}}</pre>
+                        </el-collapse-item>
+                        <el-collapse-item v-if="item.baseData && item.baseData[key]" title="baseData">
+                            <pre class="js-json-view" >{{item.baseData[key]}}</pre>
                         </el-collapse-item>
                    </el-collapse>
                 </el-tab-pane>

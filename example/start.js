@@ -62,6 +62,11 @@ mock.url('/demo', {
         fail: {
             msg: '@email is spam'
         }
+    },
+    baseData: {
+        pass: {
+            base: 1
+        }
     }
 })
 
