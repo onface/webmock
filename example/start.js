@@ -5,17 +5,16 @@ var bodyParser = require('body-parser')
 var cors = require('cors')
 var app = express()
 
-var mock = new Webmock({
-    renderViewRoot: __dirname
-})
-
 app.use(cors())
     .use(cookieParser())
     .use(bodyParser.urlencoded({extended: false, limit: '10240000kb'}))
     .use(bodyParser.json())
-app.use(express.static(require('path').join(__dirname,'./'))) // 配置静态资源路径
-app.use(mock.server('express'))
+app.use(express.static(__dirname)) // 配置静态资源路径
 
+var mock = new Webmock({
+    renderViewRoot: __dirname // 配置模板路径
+})
+app.use(mock.server('express'))
 var port = 1219
 app.listen(port, function () {
     console.log('Webmock: http://127.0.0.1:' + port)
