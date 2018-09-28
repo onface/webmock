@@ -17,6 +17,7 @@
 <script src="https://unpkg.com/react-json-view@1.19.1/dist/main.js"></script>
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script src="https://unpkg.com/mockjs@1.0.1-beta3/dist/mock-min.js"></script>
+<script src="https://unpkg.com/marked@0.5.1/lib/marked.js"></script>
 <style>
 .el-tabs--border-card {
     box-shadow: none;
@@ -120,6 +121,7 @@ html .face-one-sidebar > ul > li {
             <div style="margin-bottom:1em;">
                 <code>{{item.type}}</code> <code><a :href="item.url">{{item.url}}</a></code>
             </div>
+            <div v-html="marked(item.notes)"></div>
             <strong>Request</strong>
             <pre class="js-json-view" data-name="JSON schema">{{item.req}}</pre>
             <strong>Response</strong>
@@ -150,6 +152,12 @@ new Vue({
         },
         mock: function (data) {
             return Mock.mock(data)
+        },
+        marked: function (content) {
+            if (!content) {
+                return ''
+            }
+            return marked(content)
         }
     },
     data: function () {

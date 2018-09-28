@@ -12,7 +12,23 @@ app.use(cors())
 app.use(express.static(__dirname)) // 配置静态资源路径
 
 var mock = new Webmock({
-    renderViewRoot: __dirname // 配置模板路径
+    renderViewRoot: __dirname, // 配置模板路径
+    render: {
+        baseData: {
+            pass: {
+                user: {
+                    login: true,
+                    name: 'nimo',
+                    avatar: '@photo'
+                }
+            },
+            fail: {
+                user: {
+                    login: false
+                }
+            }
+        }
+    }
 })
 app.use(mock.server('express'))
 var port = 1219
@@ -56,7 +72,8 @@ mock.render('/php', {
         pass: {
             age: 24
         }
-    }
+    },
+    notes: `这个接口不要调用太频繁`
 })
 
 mock.url('/aa', {
