@@ -18,6 +18,8 @@
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script src="https://unpkg.com/mockjs@1.0.1-beta3/dist/mock-min.js"></script>
 <script src="https://unpkg.com/marked@0.5.1/lib/marked.js"></script>
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
 <style>
 .el-tabs--border-card {
     box-shadow: none;
@@ -107,6 +109,10 @@ html .face-one-sidebar > ul > li {
 </style>
 <div id="app" class="doc">
     <div class="face-one-sidebar">
+        <h2>
+            Webmock
+            <a class="github-button" href="https://github.com/onface/webmock" data-show-count="true" aria-label="Star onface/webmock on GitHub">Star</a>
+        </h2>
         <ul>
             <li v-for="item in data" >
                 <a class="markdown-sidebar-link" :href="'#' + item.type + ':' + item.url" >
@@ -127,6 +133,10 @@ html .face-one-sidebar > ul > li {
             <strong>Response</strong>
             <el-tabs type="border-card" >
                 <el-tab-pane v-for="(value, key) in item.data" v-if="key[0] !== '$'" :label="key" >
+                    <form :action="item.url" :method="item.type" target="_blank" style="margin-bottom:.5em;" >
+                        <input type="hidden" name="_" :value="key">
+                        <button type="submit">Preview</button>
+                    </form>
                     <pre class="js-json-view" data-collapsed="3" >{{mock(value)}}</pre>
                     <el-collapse>
                         <el-collapse-item v-if="item.data[key]" title="Mock template">
@@ -135,8 +145,8 @@ html .face-one-sidebar > ul > li {
                         <el-collapse-item v-if="item.data['$'+key]" title="JSON schema">
                             <pre class="js-json-view" >{{item.data['$' + key]['check']}}</pre>
                         </el-collapse-item>
-                        <el-collapse-item v-if="item.baseData && item.baseData[key]" title="baseData">
-                            <pre class="js-json-view" >{{item.baseData[key]}}</pre>
+                        <el-collapse-item v-if="item.commonData && item.commonData[key]" title="commonData">
+                            <pre class="js-json-view" >{{item.commonData[key]}}</pre>
                         </el-collapse-item>
                    </el-collapse>
                 </el-tab-pane>

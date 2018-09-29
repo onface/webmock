@@ -14,7 +14,7 @@ app.use(express.static(__dirname)) // 配置静态资源路径
 var mock = new Webmock({
     renderViewRoot: __dirname, // 配置模板路径
     render: {
-        baseData: {
+        commonData: {
             pass: {
                 user: {
                     login: true,
@@ -63,7 +63,7 @@ mock.url('/demo', {
             msg: '@email is spam'
         }
     },
-    baseData: {
+    commonData: {
         pass: {
             base: 1
         }
@@ -82,5 +82,5 @@ mock.render('/php', {
 })
 
 mock.url('/aa', {
-    type: 'get'
+    type: 'post'
 })
