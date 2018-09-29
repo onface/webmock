@@ -1,4 +1,11 @@
-var Webmock = require('../lib/index')
+# Webmock
+
+```shell
+yarn add express cookie-parser body-parser cors webmock
+```
+
+```js
+var Webmock = require('webmock')
 const { mock , app } = Webmock.express({
     port: 1219,
     static: __dirname,
@@ -38,3 +45,7 @@ mock.url('/login', {
         }
     }
 })
+```
+
+- `Webmock.express(props)` default props is : [./lib/defaultProps.js](./lib/defaultProps.js)
+- `mock.url(settings)` default settings is "./lib/defaultProps.js" url
