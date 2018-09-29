@@ -123,7 +123,11 @@ html .face-one-sidebar > ul > li {
 .copy-icon{
     opacity: .1;
 }
-
+.reqType {
+    color:#ccc;
+    font-size: .8em;
+    margin-left: 1em;
+}
 </style>
 <div id="app" class="doc" style="display:none;" >
     <div class="face-one-sidebar">
@@ -147,6 +151,7 @@ html .face-one-sidebar > ul > li {
             </div>
             <div v-html="marked(item.notes)"></div>
             <strong>Request</strong>
+            <span class="reqType">{{item.reqType}}</span>
             <pre class="js-json-view" data-name="JSON schema">{{item.req}}</pre>
             <strong>Response</strong>
             <el-tabs type="border-card" >
