@@ -65,7 +65,9 @@ mock.url('/demo', {
     },
     commonData: {
         pass: {
-            base: 1
+            http: {
+                method: 'get'
+            }
         }
     }
 })

@@ -7,20 +7,23 @@
     <title>API Document (Create by webmock)</title>
 </head>
 <body class="markdown-body">
-<link rel="stylesheet" href="https://unpkg.com/github-markdown-css@2.10.0/github-markdown.css" />
-<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-<script src="http://unpkg.com/vue"></script>
-<script src="https://unpkg.com/jquery@1.12.0/dist/jquery.min.js"></script>
-<script src="https://unpkg.com/vue-json-tree-view@2.1.4/dist/vue-json-tree-view.min.js"></script>
-<script src="https://unpkg.com/react@16.5.2/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/react-dom@16.5.2/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/react-json-view@1.19.1/dist/main.js"></script>
-<script src="https://unpkg.com/element-ui/lib/index.js"></script>
-<script src="https://unpkg.com/mockjs@1.0.1-beta3/dist/mock-min.js"></script>
-<script src="https://unpkg.com/marked@0.5.1/lib/marked.js"></script>
+<link rel="stylesheet" href="https://unpkg.onface.live/github-markdown-css@2.10.0/github-markdown.css" />
+<link rel="stylesheet" href="https://unpkg.onface.live/element-ui/lib/theme-chalk/index.css">
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.min.js"></script>
+<script src="https://unpkg.onface.live/jquery@1.12.0/dist/jquery.min.js"></script>
+<script src="https://unpkg.onface.live/vue-json-tree-view@2.1.4/dist/vue-json-tree-view.min.js"></script>
+<script src="https://unpkg.onface.live/react@16.5.2/umd/react.production.min.js"></script>
+<script src="https://unpkg.onface.live/react-dom@16.5.2/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.onface.live/react-json-view@1.19.1/dist/main.js"></script>
+<script src="https://unpkg.onface.live/element-ui/lib/index.js"></script>
+<script src="https://unpkg.onface.live/mockjs@1.0.1-beta3/dist/mock-min.js"></script>
+<script src="https://unpkg.onface.live/marked@0.5.1/lib/marked.js"></script>
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 <style>
+body {
+    margin: 0;
+}
 .el-tabs--border-card {
     box-shadow: none;
     -webkit-box-shadow:none;
@@ -41,16 +44,28 @@
 }
 .face-one-sidebar {
   float: left;
-  border-right: 1px solid #eee;
   position: fixed;
   position: sticky;
-  top: 1em;
+  top: 0;
   margin-left: -19em;
   width: 18em;
   padding-left: 1em;
   line-height: 1.6;
   z-index: 10;
-  background-color: white;
+}
+.face-one-sidebar:before {
+    content: ' ';
+    display: inline-block;
+    width: 17em;
+    height: 999em;
+    background-color: #f5f7fa;
+    border-right:1px solid #e6e9f0;
+    z-index: -1;
+    position: fixed;
+}
+.face-one-sidebar h2 {
+    padding-left: .5em;
+    margin-bottom: .5em;
 }
 html .face-one-sidebar > ul {
   display: block;
@@ -88,6 +103,9 @@ html .face-one-sidebar > ul > li {
         width: 100%;
         margin-left: 0;
     }
+    .face-one-sidebar:before {
+        display: none;
+    }
 }
 .array-key {
     display: none;
@@ -107,7 +125,7 @@ html .face-one-sidebar > ul > li {
 }
 
 </style>
-<div id="app" class="doc">
+<div id="app" class="doc" style="display:none;" >
     <div class="face-one-sidebar">
         <h2>
             Webmock
@@ -157,6 +175,7 @@ html .face-one-sidebar > ul > li {
 <script>
 var data = <%- data%>
 Vue.use(TreeView)
+document.getElementById("app").style.display = 'block'
 new Vue({
     el: '#app',
     methods: {

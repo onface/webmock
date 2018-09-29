@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "s": "DEBUG=webmock:* babel-watch --watch lib ./example/start.js",
-    "php": "php -S 127.0.0.1:7233 -t ./example",
+    "php": "php -S 127.0.0.1:7233 -t ./example/render.php",
     "test": "./node_modules/mocha/bin/mocha  -w test/**.test.js",
     "test:debug": "DEBUG=webmock:*  ./node_modules/mocha/bin/mocha --inspect  -w test/**.test.js"
   },
