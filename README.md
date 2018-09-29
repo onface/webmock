@@ -1,7 +1,7 @@
 # Webmock
 
 ```shell
-yarn add express cookie-parser body-parser cors webmock
+yarn add webmock
 ```
 
 ```js
