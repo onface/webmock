@@ -58,7 +58,7 @@ body {
     display: inline-block;
     width: 17em;
     height: 999em;
-    background-color: #f5f7fa;
+    background-color: white;
     border-right:1px solid #e6e9f0;
     z-index: -1;
     position: fixed;
@@ -153,7 +153,9 @@ html .face-one-sidebar > ul > li {
                 <el-tab-pane v-for="(value, key) in item.data" v-if="key[0] !== '$'" :label="key" >
                     <form :action="item.url" :method="item.type" target="_blank" style="margin-bottom:.5em;" >
                         <input type="hidden" name="_" :value="key">
-                        <button type="submit">Preview</button>
+                        <el-button native-type="submit" size="mini" >
+                            <i class="el-icon-view"></i> Preview
+                        </el-button>
                     </form>
                     <pre class="js-json-view" data-collapsed="3" >{{mock(value)}}</pre>
                     <el-collapse>
