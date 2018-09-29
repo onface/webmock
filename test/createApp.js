@@ -4,7 +4,12 @@ const app = express()
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
 var cors = require('cors')
-const mock = new Webmock()
+const mock = new Webmock({
+    renderViewRoot: __dirname + '/',
+    url: {
+        contentType: 'json'
+    }
+})
 app.use(cors())
     .use(cookieParser())
     .use(bodyParser.urlencoded({extended: false, limit: '10240000kb'}))

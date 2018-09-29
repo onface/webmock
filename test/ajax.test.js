@@ -335,4 +335,32 @@ describe('ajax.test.js', function() {
             done()
         })
     })
+        mock.url('/contentType', {
+            type: 'get',
+            data: {
+                pass: {},
+                fail: {
+
+                },
+                $fail: {
+                    contentType: 'html'
+                }
+            }
+        })
+    it('shout return contentType', function (done) {
+        request(app)
+        .get('/contentType')
+        .then(res => {
+            res.type.should.eql('application/json')
+            done()
+        })
+    })
+    it('shout return contentType', function (done) {
+        request(app)
+        .get('/contentType?_=fail')
+        .then(res => {
+            res.type.should.eql('text/html')
+            done()
+        })
+    })
 })
