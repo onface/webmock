@@ -53,5 +53,10 @@ mock.url('/user', {
             example: 'abcddefg'
         }
     },
+    data: {
+        pass: {
+            name: 'nimo'
+        }
+    },
     engine: 'php'
 })
