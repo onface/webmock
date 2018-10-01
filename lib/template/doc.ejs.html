@@ -123,10 +123,24 @@ html .face-one-sidebar > ul > li {
 .copy-icon{
     opacity: .1;
 }
-.reqType {
+.tip {
     color:#ccc;
     font-size: .8em;
-    margin-left: 1em;
+    margin-left: .2em;
+}
+.url-form {
+    display: inline;
+    padding: 0;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    border:none;
+    color:#0366d6;
+    font-size: 1em;
+    font-weight: inherit;
+}
+.url-form:hover {
+    cursor: pointer;
 }
 </style>
 <div id="app" class="doc" style="display:none;" >
@@ -145,16 +159,28 @@ html .face-one-sidebar > ul > li {
     </div>
     <div class="doc-content">
         <div v-for="item in data">
-            <h2 :id="item.type + ':'+item.url" ><a :href="item.url">{{item.title || item.url}}</a></h2>
+            <h2 :id="item.type + ':'+item.url" >
+                <form :action="item.url" :method="item.type" target="_blank" style="display:inline-block;">
+                    <button type="submit" class="url-form" >
+                        {{item.title || item.url}}
+                    </button>
+                </form>
+                <span class="tip">{{item.view? 'render': ''}}</span>
+            </h2>
             <div style="margin-bottom:1em;">
-                <code>{{item.type}}</code> <code><a :href="item.url">{{item.url}}</a></code>
+                <code>{{item.type}}</code>
+                <form :action="item.url" :method="item.type" target="_blank" style="display:inline-block;">
+                    <button type="submit" class="url-form" >
+                        {{item.url}}
+                    </button>
+                </form>
             </div>
             <div v-html="marked(item.notes)"></div>
             <strong>Request</strong>
-            <span class="reqType">{{item.reqType}}</span>
+            <span class="tip">{{item.reqType}}</span>
             <pre class="js-json-view" data-name="JSON schema">{{item.req}}</pre>
             <strong>Response</strong>
-            <el-tabs type="border-card" >
+            <el-tabs type="border-card">
                 <el-tab-pane v-for="(value, key) in item.data" v-if="key[0] !== '$'" :label="key" >
                     <form :action="item.url" :method="item.type" target="_blank" style="margin-bottom:.5em;" >
                         <input type="hidden" name="_" :value="key">

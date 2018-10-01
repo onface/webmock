@@ -4,8 +4,9 @@
   "description": "Mock AJAX/HTTP/SSR - Automatically generate documentation",
   "main": "lib/index.js",
   "scripts": {
-    "s": "DEBUG=webmock:* babel-watch --watch lib ./example/start.js",
-    "php": "php -S 127.0.0.1:7233 -t ./example/render.php",
+    "s": "babel-watch --watch lib ./example/start.js",
+    "s:debug": "DEBUG=webmock:* DEBUG=webmock:* ",
+    "php": "php -S 127.0.0.1:7233 -t example/render",
     "test": "./node_modules/mocha/bin/mocha  -w test/**.test.js",
     "test:debug": "DEBUG=webmock:*  ./node_modules/mocha/bin/mocha --inspect  -w test/**.test.js"
   },

@@ -7,7 +7,8 @@ const { mock , app } = Webmock.express({
             pass: {},
             fail: {msg: 'fail message'}
         }
-    }
+    },
+    renderRoot: __dirname
 })
 // mock.writeDoc(__dirname + '/doc.html')
 mock.url('/news', {
@@ -37,4 +38,20 @@ mock.url('/login', {
             example: 'abcddefg'
         }
     }
+})
+mock.url('/user', {
+    type: 'post',
+    view: 'user.html',
+    // JSON schema
+    request: {
+        user: {
+            title: '用户名',
+            example: 'nimo'
+        },
+        password: {
+            title: '密码',
+            example: 'abcddefg'
+        }
+    },
+    engine: 'php'
 })
