@@ -34,7 +34,7 @@ mock.url('/news', {
 mock.url('/login', {
     type: 'post',
     // JSON schema
-    request: {
+    req: {
         user: {
             title: '用户名',
             example: 'nimo'

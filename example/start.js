@@ -26,9 +26,10 @@ mock.url('/news', {
 })
 
 mock.url('/login', {
+    title: '登录',
     type: 'post',
     // JSON schema
-    request: {
+    req: {
         user: {
             title: '用户名',
             example: 'nimo'
@@ -43,7 +44,7 @@ mock.url('/user', {
     type: 'post',
     view: 'user.html',
     // JSON schema
-    request: {
+    req: {
         user: {
             title: '用户名',
             example: 'nimo'
