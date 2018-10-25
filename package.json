@@ -1,6 +1,6 @@
 {
   "name": "webmock",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Mock AJAX/HTTP/SSR - Automatically generate documentation",
   "main": "lib/index.js",
   "scripts": {
@@ -42,15 +42,15 @@
     "query-string": "5",
     "request": "^2.88.0",
     "safe-extend": "^3.0.5",
-    "xtemplate": "^4.6.1"
+    "xtemplate": "^4.6.1",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.4",
+    "body-parser": "^1.18.3"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-watch": "^2.0.7",
-    "body-parser": "^1.18.3",
     "chai": "^4.1.2",
-    "cookie-parser": "^1.4.3",
-    "cors": "^2.8.4",
     "express": "^4.16.3",
     "mocha": "^5.2.0",
     "supertest": "^3.3.0"
