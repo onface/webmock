@@ -1,4 +1,9 @@
 var Webmock = require('../lib/index')
+var express = require('express')
+var cookieParser = require('cookie-parser')
+var bodyParser = require('body-parser')
+var cors = require('cors')
+
 const { mock , app } = Webmock.express({
     port: 1219,
     static: __dirname,

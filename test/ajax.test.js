@@ -178,22 +178,22 @@ describe('ajax.test.js', function() {
             done()
         })
     })
-        mock.url('/header_name_nimo', {
+        mock.url('/headers_name_nimo', {
             type: 'get',
-            header: {
+            headers: {
                 name: 'nimo'
             }
         })
-        mock.url('/header', {
+        mock.url('/headers', {
             type: 'get',
             data: {
                 $pass: {
-                    header: {
+                    headers: {
                         a: 'pass'
                     }
                 },
                 $fail: {
-                    header: {
+                    headers: {
                         a: 'fail'
                     }
                 },
@@ -201,7 +201,7 @@ describe('ajax.test.js', function() {
 
                 },
                 $mock: {
-                    header: {
+                    headers: {
                         'name': "@email"
                     }
                 }
@@ -209,7 +209,7 @@ describe('ajax.test.js', function() {
         })
     it('should return header_name_nimo', function (done) {
         request(app)
-        .get('/header_name_nimo')
+        .get('/headers_name_nimo')
         .expect('name', 'nimo')
         .then(res => {
             done()
@@ -217,7 +217,7 @@ describe('ajax.test.js', function() {
     })
     it('should return header pass', function (done) {
         request(app)
-        .get('/header')
+        .get('/headers')
         .expect('a', 'pass')
         .then(res => {
             done()
@@ -225,7 +225,7 @@ describe('ajax.test.js', function() {
     })
     it('should return header fail', function (done) {
         request(app)
-        .get('/header?_=fail')
+        .get('/headers?_=fail')
         .expect('a', 'fail')
         .then(res => {
             done()
@@ -233,7 +233,7 @@ describe('ajax.test.js', function() {
     })
     it('should return header mock', function (done) {
         request(app)
-        .get('/header?_=mock')
+        .get('/headers?_=mock')
         .then(res => {
             res.headers['name'].should.match(/@/)
             res.headers['name'].should.match(/\./)

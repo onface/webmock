@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
 var cors = require('cors')
 const mock = new Webmock({
-    renderViewRoot: __dirname + '/',
+    renderRoot: __dirname + '/',
     url: {
         contentType: 'json'
     }
