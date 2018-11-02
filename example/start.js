@@ -13,6 +13,22 @@ const { mock , app } = Webmock.express({
             fail: {msg: 'fail message'}
         }
     },
+    dataAutoFill: [
+        {
+            key: 'status',
+            replace: 'rType',
+            replacerTypeMap: {
+                'pass': 'success',
+                'fail': 'error',
+                '::default': 'success'
+            }
+        },
+        {
+            key: 'data',
+            replace: 'root',
+            replaceRootIgnore: ['msg']
+        }
+    ],
     renderRoot: __dirname
 })
 // mock.writeDoc(__dirname + '/doc.html')
