@@ -17,7 +17,7 @@ const { mock , app } = Webmock.express({
         {
             key: 'status',
             replace: 'rType',
-            replacerTypeMap: {
+            replaceResponseType: {
                 'pass': 'success',
                 'fail': 'error',
                 '::default': 'success'
