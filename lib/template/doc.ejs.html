@@ -184,6 +184,7 @@ html .face-one-sidebar > ul > li {
                 <el-tab-pane v-for="(value, key) in item.data" v-if="key[0] !== '$'" :label="key" >
                     <form :action="item.url" :method="item.type" target="_blank" style="margin-bottom:.5em;" >
                         <input type="hidden" name="_" :value="key">
+                        <input type="text" v-if="!item.view" name="$" value="url">
                         <el-button native-type="submit" size="mini" >
                             <i class="el-icon-view"></i> Preview
                         </el-button>
