@@ -167,6 +167,10 @@ html .face-one-sidebar > ul > li {
                 </form>
                 <span class="tip">{{item.view? 'render': ''}}</span>
             </h2>
+            <div style="margin-bottom:1em;" v-if="item.view">
+                <code>template</code>
+                {{item.view}}
+            </div>
             <div style="margin-bottom:1em;">
                 <code>{{item.type}}</code>
                 <form :action="item.url" :method="item.type" target="_blank" style="display:inline-block;">
