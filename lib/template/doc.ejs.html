@@ -185,6 +185,12 @@ html .face-one-sidebar > ul > li {
                     </button>
                 </form>
             </div>
+            <div style="margin-bottom:1em;" v-if="item.view">
+                <code>template</code>
+                <button class="url-form" >
+                    {{item.view}}
+                </button>
+            </div>
             <div v-html="marked(item.notes)"></div>
             <strong>Request</strong>
             <span class="tip">{{item.reqType}}</span>
